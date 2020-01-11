@@ -1,7 +1,7 @@
 import React from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import People from 'screens/People';
+import People from 'screens/PeopleScreen/People';
 
 const AppStack = createStackNavigator(
   {

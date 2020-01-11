@@ -1,65 +1,47 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {Text, View, FlatList, StyleSheet, Image} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-import {_getPeople} from '../services/StarWarsServices';
 import {color} from 'theme';
-export default class People extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      data: {},
-      peopleList: [],
-    };
-  }
-
-  componentDidMount() {
-    this.getPeople(1);
-  }
-
-  async getPeople(id) {
-    let response = await _getPeople(id);
-    if (!response) {
-      //something went wrong or no internet
-    } else {
-      this.setState({data: response, peopleList: response.results});
-    }
-  }
-
+export default class PeopleList extends PureComponent {
   renderPeopleItems = ({item, index}) => {
-    let {itemContainer, avatarCol, avatar, detailCol} = styles;
+    let {itemContainer, avatarCol, avatar, detailCol, title, subTitle} = styles;
+
     return (
       <View style={itemContainer}>
         <View style={avatarCol}>
           <Image source={require('images/logo.jpeg')} style={avatar} />
         </View>
         <View style={detailCol}>
-          <Text>{item.name}</Text>
-          <Text>{item.gender}</Text>
-          <Text>{item.birth_year}</Text>
+          <Text style={title}>{item.name}</Text>
+          <Text style={subTitle}>Gender: {item.gender}</Text>
+          <Text style={subTitle}>DOB: {item.birth_year}</Text>
         </View>
       </View>
     );
   };
 
-  renderPeopleFlatlist() {
-    let {peopleList} = this.state;
-    return <FlatList data={peopleList} renderItem={this.renderPeopleItems} />;
-  }
+  handleLoadMore = () => {
+    console.log('handleLoadMore');
+    this.props.loadMore();
+  };
 
   render() {
-    let {container} = styles;
+    let {data} = this.props;
     return (
-      <View style={container}>
-        <Text> People </Text>
-        {this.renderPeopleFlatlist()}
-      </View>
+      <FlatList
+        data={data}
+        renderItem={this.renderPeopleItems}
+        removeClippedSubviews={true}
+        initialNumToRender={10}
+        onEndReachedThreshold={0.01}
+        onEndReached={this.handleLoadMore}
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: color.palette.white},
   itemContainer: {
     backgroundColor: color.palette.white,
     flexDirection: 'row',
@@ -70,7 +52,7 @@ const styles = StyleSheet.create({
     paddingVertical: moderateScale(5),
     elevation: 2, //works on android
     shadowColor: color.palette.lighterGrey,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: {width: 0, height: 8},
     shadowOpacity: 0.8,
     shadowRadius: 2,
   },
@@ -81,4 +63,14 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(10),
   },
   detailCol: {flex: 0.6},
+  title: {
+    fontSize: moderateScale(15),
+    color: color.palette.black,
+    marginBottom: moderateScale(5),
+  },
+  subTitle: {
+    fontSize: moderateScale(12),
+    color: color.palette.lightblack,
+    marginBottom: moderateScale(2),
+  },
 });

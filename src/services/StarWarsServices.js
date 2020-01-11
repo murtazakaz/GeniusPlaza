@@ -8,6 +8,11 @@ export const _getPeople = id => {
   return fetchAPI(route, method);
 };
 
+export const _getMorePeople = route => {
+  let method = {method: 'GET'};
+  return fetchAPI(route, method);
+};
+
 export const _getPlanets = id => {
   let route = Environment.BASE_URL + 'planets/' + id;
   let method = {method: 'GET'};
