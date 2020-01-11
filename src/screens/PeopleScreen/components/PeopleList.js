@@ -1,9 +1,26 @@
 import React, {Component, PureComponent} from 'react';
-import {Text, View, FlatList, StyleSheet, Image} from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
+import {withNavigation} from 'react-navigation';
 import {color} from 'theme';
 
-export default class PeopleList extends PureComponent {
+class PeopleList extends PureComponent {
+  handleLoadMore = () => {
+    this.props.loadMore();
+  };
+
+  getFilmDetails(item) {
+    console.log('getFilmDetails', this.props, item.homeworld);
+    this.props.navigation.navigate('Planet', {route: item.homeworld});
+  }
+
   renderPeopleItems = ({item, index}) => {
     let {itemContainer, avatarCol, avatar, detailCol, title, subTitle} = styles;
 
@@ -15,15 +32,14 @@ export default class PeopleList extends PureComponent {
         <View style={detailCol}>
           <Text style={title}>{item.name}</Text>
           <Text style={subTitle}>Gender: {item.gender}</Text>
+          <Text style={subTitle}>Height: {item.height}</Text>
           <Text style={subTitle}>DOB: {item.birth_year}</Text>
+          <TouchableOpacity onPress={() => this.getFilmDetails(item)}>
+            <Text>File</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
-  };
-
-  handleLoadMore = () => {
-    console.log('handleLoadMore');
-    this.props.loadMore();
   };
 
   render() {
@@ -32,6 +48,7 @@ export default class PeopleList extends PureComponent {
       <FlatList
         data={data}
         renderItem={this.renderPeopleItems}
+        keyExtractor={(item, index) => index.toString()}
         removeClippedSubviews={true}
         initialNumToRender={10}
         onEndReachedThreshold={0.01}
@@ -40,6 +57,8 @@ export default class PeopleList extends PureComponent {
     );
   }
 }
+
+export default withNavigation(PeopleList);
 
 const styles = StyleSheet.create({
   itemContainer: {

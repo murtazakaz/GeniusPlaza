@@ -3,8 +3,8 @@ import {Text, View, FlatList, StyleSheet, Image} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
 import {_getPeople} from 'services/StarWarsServices';
 import {color} from 'theme';
-import PeopleList from './components/PeopleList';
-import {_getMorePeople} from '../../services/StarWarsServices';
+import PeopleList from 'peopleComponents/PeopleList';
+import {_getMorePeople} from 'services/StarWarsServices';
 import Loader from 'components/Loader';
 export default class People extends Component {
   constructor(props) {
@@ -39,9 +39,10 @@ export default class People extends Component {
   }
 
   loadMoreData = async () => {
-    let {data, peopleList} = this.state;
+    let {data, peopleList, loadingMore} = this.state;
 
-    if (data.next) {
+    if (!loadingMore && data.next) {
+      //if data.next has more page to load && if loadingMore is true then dont load more
       this.setState({loadingMore: true});
 
       let response = await _getMorePeople(data.next);
