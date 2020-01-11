@@ -3,6 +3,7 @@
 This application has been developed using React Native which is a Cross Platform for Mobile application development.
 This application is built using React Native version 0.61.5.
 
+
 ## How to run project:
 
 -Clone repo
@@ -15,7 +16,7 @@ For iOS:
 -run
 
 > npx react-native run-ios
-> or if using react native cli
+ or if using react native cli
 > react-native run-ios
 
 For android:
@@ -23,7 +24,7 @@ For android:
 -run
 
 > npx react-native run-android
-> or if using react native cli
+ or if using react native cli
 > react-native run-android
 
 ## Implementation and Workflow:
