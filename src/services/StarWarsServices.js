@@ -1,21 +1,21 @@
-import {Environment} from '../config/environment';
-import {fetchAPI} from './fetch';
+import Environment from '../config/environment';
+import fetchAPI from './Fetch';
 
 export const _getPeople = id => {
-  let route = +'/people/' + id;
+  let route = Environment.BASE_URL + 'people/';
 
   let method = {method: 'GET'};
-  return fetchAPI(Environment.BASE_URL, route, method);
+  return fetchAPI(route, method);
 };
 
 export const _getPlanets = id => {
-  let route = +'/planets/' + id;
+  let route = Environment.BASE_URL + 'planets/' + id;
   let method = {method: 'GET'};
-  return fetchAPI(Environment.BASE_URL, route, method);
+  return fetchAPI(route, method);
 };
 
 export const _getStarships = id => {
-  let route = +'/starships/' + id;
+  let route = Environment.BASE_URL + 'starships/' + id;
   let method = {method: 'GET'};
-  return fetchAPI(Environment.BASE_URL, route, method);
+  return fetchAPI(route, method);
 };
