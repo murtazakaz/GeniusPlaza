@@ -17,9 +17,3 @@ export const _getPlanets = route => {
   let method = {method: 'GET'};
   return fetchAPI(route, method);
 };
-
-export const _getStarships = id => {
-  let route = Environment.BASE_URL + 'starships/' + id;
-  let method = {method: 'GET'};
-  return fetchAPI(route, method);
-};
